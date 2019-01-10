@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+
+    var dt = ViewBag.DT;
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<br />
+<input type="button" class="btn btn-group-sm" onclick="javascript:location.href='/Home/CreatRoom'" value="創建聊天室">
+<br /><br />
+<form style="margin-left:10px;" method="post" action="/Home/ChatView">
+    <div>
+        @for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            @Html.Raw($"聊天室: {dt.Rows[i]["name"]}, 線上人數: {dt.Rows[i]["live"]}")
+            <button type="submit" onclick="move(@i)" class="btn btn-primary">進入</button>
+            <br />
+        }
+    </div>
+    <div id="discussion"></div>
+</form>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+    function move(id) {
+        $('#discussion').append('<input type="hidden" name="a" value=' + id + '>');
+    }
+</script>
